@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Rugsejo_19_20_Uzduotele",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Rugsejo_19_20_Uzduotele::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Rugsejo_19_20_Uzduotele-Debug-000aa65ab3cf1cd78bd0.json",
+					"name" : "Rugsejo_19_20_Uzduotele",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Darbai/Rugsejo_19-20_Uzduotele/cmake-build-debug",
+		"source" : "C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Darbai/Rugsejo_19-20_Uzduotele"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
