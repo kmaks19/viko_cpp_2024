@@ -31,6 +31,8 @@ int main()
 
     double MoneyValue = 0, finalSum;
 
+    string currencyType;
+
     switch(menuChoice)
     {
         case 1:
@@ -98,29 +100,27 @@ int main()
                     return 0;
                 }
             }
-
-            string CurrencyType;
             switch(currencyChoice)
             {
                 case 1:
                 {
-                    CurrencyType = "GBP";
+                    currencyType = "GBP";
                     break;
                 }
                 case 2:
                 {
-                    CurrencyType = "USD";
+                    currencyType = "USD";
                     break;
                 }
                 case 3:
                 {
-                    CurrencyType = "INR";
+                    currencyType = "INR";
                     break;
                 }
                 default: break;
             }
 
-            cout << "EUR valiutà " << MoneyValue << " pavertus á " << CurrencyType << " gausime " << fixed << setprecision(2) << finalSum << " " << CurrencyType << endl;
+            cout << "EUR valiutà " << MoneyValue << " pavertus á " << currencyType << " gausime " << fixed << setprecision(2) << finalSum << " " << currencyType << endl;
             break;
         }
         case 2:
@@ -189,28 +189,27 @@ int main()
                 }
             }
 
-            string Currency_Type;
             switch(currencyChoice)
             {
                 case 1:
                 {
-                    Currency_Type = "GBP";
+                    currencyType = "GBP";
                     break;
                 }
                 case 2:
                 {
-                    Currency_Type = "USD";
+                    currencyType = "USD";
                     break;
                 }
                 case 3:
                 {
-                    Currency_Type = "INR";
+                    currencyType = "INR";
                     break;
                 }
                 default: break;
             }
 
-            cout << "Uþ " << MoneyValue << " EUR" << " galite nusipirkti " << fixed << setprecision(2) << finalSum << " " << Currency_Type << endl;
+            cout << "Uþ " << MoneyValue << " EUR" << " galite nusipirkti " << fixed << setprecision(2) << finalSum << " " << currencyType << endl;
 
             break;
         }
@@ -279,7 +278,6 @@ int main()
                 }
             }
 
-            string currencyType;
             switch(currencyChoice)
             {
                 case 1:
