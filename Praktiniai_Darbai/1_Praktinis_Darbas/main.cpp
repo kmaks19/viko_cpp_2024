@@ -14,7 +14,7 @@ int main()
     const float INR_Bendras = 88.8260, INR_Pirkti = 85.2614, INR_Parduoti = 92.8334;
 
     int menuChoice;
-    cout << "Jûsø pagrindinë valiuta yra eurai (€)" << endl;
+    cout << "Jûsø pagrindinë valiuta yra eurai" << endl;
     cout << "Pasirinkite: " << endl;
 
     cout << "1. Valiutos kurso palyginimas su kita valiuta." << endl;
@@ -29,7 +29,7 @@ int main()
         return 0;
     }
 
-    float MoneyValue = 0, finalSum = 0;
+    double MoneyValue = 0, finalSum;
 
     switch(menuChoice)
     {
@@ -99,15 +99,28 @@ int main()
                 }
             }
 
-            string ValiutosTipas;
+            string CurrencyType;
             switch(currencyChoice)
             {
-                case 1: ValiutosTipas = "GBP";
-                case 2: ValiutosTipas = "USD";
-                case 3: ValiutosTipas = "INR";
+                case 1:
+                {
+                    CurrencyType = "GBP";
+                    break;
+                }
+                case 2:
+                {
+                    CurrencyType = "USD";
+                    break;
+                }
+                case 3:
+                {
+                    CurrencyType = "INR";
+                    break;
+                }
+                default: break;
             }
 
-            cout << "EUR valiutà " << MoneyValue << " pavertus á " << ValiutosTipas << " gausime " << finalSum << " " << ValiutosTipas << fixed << setprecision(2) << endl;
+            cout << "EUR valiutà " << MoneyValue << " pavertus á " << CurrencyType << " gausime " << fixed << setprecision(2) << finalSum << " " << CurrencyType << endl;
             break;
         }
         case 2:
@@ -176,22 +189,122 @@ int main()
                 }
             }
 
-            string valiutosTipas;
+            string Currency_Type;
             switch(currencyChoice)
             {
-                case 1: valiutosTipas = "GBP";
-                case 2: valiutosTipas = "USD";
-                case 3: valiutosTipas = "INR";
+                case 1:
+                {
+                    Currency_Type = "GBP";
+                    break;
+                }
+                case 2:
+                {
+                    Currency_Type = "USD";
+                    break;
+                }
+                case 3:
+                {
+                    Currency_Type = "INR";
+                    break;
+                }
+                default: break;
             }
 
-            cout << "Uþ " << MoneyValue << " EUR" << " galite nusipirkti " << finalSum << " " << valiutosTipas << fixed << setprecision(2);
+            cout << "Uþ " << MoneyValue << " EUR" << " galite nusipirkti " << fixed << setprecision(2) << finalSum << " " << Currency_Type << endl;
 
             break;
         }
         case 3:
         {
+            cout << "Pasirinkite valiutà, kurià norësite parduoti: " << endl;
+
+            cout << "1. GBP" << endl;
+            cout << "2. USD" << endl;
+            cout << "3. INR" << endl;
+
+            int currencyChoice;
+
+            cin >> currencyChoice;
+
+            switch(currencyChoice)
+            {
+                case 1:
+                {
+                    cout << "Áveskite kiek norësite parduoti GBP:" << endl;
+                    cin >> MoneyValue;
+
+                    if(MoneyValue <= 0)
+                    {
+                        cout << "Suma turi bûti ne maþesnë negu 1!" << endl;
+                        return 0;
+                    }
+
+                    finalSum = MoneyValue / GBP_Parduoti;
+
+                    break;
+                }
+                case 2:
+                {
+                    cout << "Áveskite kiek norësite parduoti USD:" << endl;
+                    cin >> MoneyValue;
+
+                    if(MoneyValue <= 0)
+                    {
+                        cout << "Suma turi bûti ne maþesnë negu 1!" << endl;
+                        return 0;
+                    }
+
+                    finalSum = MoneyValue / USD_Parduoti;
+
+                    break;
+                }
+                case 3:
+                {
+                    cout << "Áveskite kiek norësite parduoti INR:" << endl;
+                    cin >> MoneyValue;
+
+                    if(MoneyValue <= 0)
+                    {
+                        cout << "Suma turi bûti ne maþesnë negu 1!" << endl;
+                        return 0;
+                    }
+                    finalSum = MoneyValue / INR_Parduoti;
+
+                    break;
+                }
+                default:
+                {
+                    cout << "ERROR: Pasirinkti privalote tarp 1-3!" << endl;
+                    return 0;
+                }
+            }
+
+            string currencyType;
+            switch(currencyChoice)
+            {
+                case 1:
+                {
+                    currencyType = "GBP";
+                    break;
+                }
+                case 2:
+                {
+                    currencyType = "USD";
+                    break;
+                }
+                case 3:
+                {
+                    currencyType = "INR";
+                    break;
+                }
+                default: break;
+            }
+
+            cout << MoneyValue << " " << currencyType << " pardavæ gausite: " << fixed << setprecision(2) << finalSum << " EUR" << endl;
+
             break;
         }
+        default: break;
     }
 
     return 0;
