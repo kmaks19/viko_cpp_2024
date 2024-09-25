@@ -148,7 +148,7 @@ int main()
                         return 0;
                     }
 
-                    finalSum = MoneyValue * GBP_Pirkti;
+                    finalSum = MoneyValue / GBP_Pirkti;
 
                     break;
                 }
@@ -163,7 +163,7 @@ int main()
                         return 0;
                     }
 
-                    finalSum = MoneyValue * USD_Pirkti;
+                    finalSum = MoneyValue / USD_Pirkti;
 
                     break;
                 }
@@ -178,7 +178,7 @@ int main()
                         return 0;
                     }
 
-                    finalSum = MoneyValue * INR_Pirkti;
+                    finalSum = MoneyValue / INR_Pirkti;
 
                     break;
                 }
@@ -209,7 +209,7 @@ int main()
                 default: break;
             }
 
-            cout << "Uþ " << MoneyValue << " EUR" << " galite nusipirkti " << fixed << setprecision(2) << finalSum << " " << currencyType << endl;
+            cout << "" << fixed << setprecision(2) << MoneyValue << " " << currencyType << " jums kainuos " << finalSum << " EUR" << " perkant." << endl;
 
             break;
         }
