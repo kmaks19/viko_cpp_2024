@@ -1,0 +1,3 @@
+C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Rugsejo_26-27_Uzduotele_Funkcijos/cmake-build-debug/CMakeFiles/Rugsejo_26_27_Uzduotele_Funkcijos.dir
+C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Rugsejo_26-27_Uzduotele_Funkcijos/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Rugsejo_26-27_Uzduotele_Funkcijos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
