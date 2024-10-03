@@ -1,0 +1,3 @@
+C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_3-4_Uzduoteles/cmake-build-debug/CMakeFiles/Spalio_3_4_Uzduoteles.dir
+C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_3-4_Uzduoteles/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_3-4_Uzduoteles/cmake-build-debug/CMakeFiles/rebuild_cache.dir

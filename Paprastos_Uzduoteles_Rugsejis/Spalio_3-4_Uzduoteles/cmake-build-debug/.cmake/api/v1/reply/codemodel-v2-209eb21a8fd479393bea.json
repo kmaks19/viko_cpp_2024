@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Spalio_3_4_Uzduoteles",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Spalio_3_4_Uzduoteles::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Spalio_3_4_Uzduoteles-Debug-0ae062afc8df580ad602.json",
+					"name" : "Spalio_3_4_Uzduoteles",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_3-4_Uzduoteles/cmake-build-debug",
+		"source" : "C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_3-4_Uzduoteles"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
