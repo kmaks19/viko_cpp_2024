@@ -42,8 +42,8 @@ void zaidimas()
             cin >> inputGuessNumber;
         }
 
-        if(inputGuessNumber < randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo maşesnis uş skaièiø kurá reikia atspëti" << endl;
-        else if(inputGuessNumber > randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo didesnis uş skaièiø kurá reikia atspëti" << endl;
+        if(inputGuessNumber < randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo maşesnis uş skaièiø kurá reikia atspëti. Spëkite á didesnæ pusæ!" << endl;
+        else if(inputGuessNumber > randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo didesnis uş skaièiø kurá reikia atspëti. Spëkite á maşesnæ pusæ!" << endl;
     }
     if(inputGuessNumber == randomNumber) cout << "Sveikiname! Atspëjote! Skaièius buvo " << randomNumber << endl;
 }
