@@ -2,7 +2,6 @@
 #include <string>
 #include <ctime>
 #include <array>
-#include <cctype>
 
 using namespace std;
 
@@ -12,7 +11,7 @@ bool IsCharVowel(const char letter) // Ar skaicius yra balsis
 
     for(char i : vowelsList)
     {
-        return (letter == i || toupper(letter) == i) ? true : false; // Toupper - pavertimas didþiosiomis, kad nebûtø skirtumo ar ávesta maþoji ar didþioji raidë
+        if(letter == i || toupper(letter) == i) return true; // Toupper - pavertimas didþiosiomis, kad nebûtø skirtumo ar ávesta maþoji ar didþioji raidë
     }
     return false;
 }
@@ -46,9 +45,9 @@ void FizzBuzz(const int n)
 {
     for(int i = 1; i <= n; i++)
     {
-        if(i % 3 == 0) cout << i << " - Fizz" << endl;
-        if(i % 5 == 0) cout << i << " - Buzz" << endl;
         if(i % 3 == 0 && i % 5 == 0) cout << i << " - FizzBuzz" << endl;
+        else if(i % 3 == 0) cout << i << " - Fizz" << endl;
+        else if(i % 5 == 0) cout << i << " - Buzz" << endl;
     }
 }
 
@@ -94,12 +93,6 @@ int main()
 
                 cin >> letter;
 
-                if(!isalpha(letter))
-                {
-                    cout << "[ERROR]: Ávesti privalote raidæ!" << endl;
-
-                }
-
                 (IsCharVowel(letter)) ? cout << "Ávesta raidë yra balsis" << endl : cout << "Ávesta raidë nëra balsis" << endl;
 
                 continue;
@@ -113,7 +106,17 @@ int main()
                 for(int i = 0; i < array_length; i++)
                 {
                     cout << "Áveskite " << i+1 << "-àjá" << " skaitmená: " << endl;
+
                     cin >> skaitmenys[i];
+
+                    if(cin.fail() ) // Jeigu ávestas yra ne skaitmuo
+                    {
+                        cout << "[ERROR]: Praðome ávesti skaièiø. Áveskite per naujo. " << endl;
+                        cout << "Áveskite " << i+1 << "-àjá" << " skaitmená: " << endl;
+                        cin.clear();
+                        cin.ignore();
+                        cin >> skaitmenys[i];
+                    }
                 }
 
                 cout << "Didþiausias bendras daliklis tarp skaièiaus " << skaitmenys[0] << " ir skaièiaus " << skaitmenys[1] << " yra: " << \
@@ -131,6 +134,15 @@ int main()
                 cout << "Áveskite teigiamà sveikàjá skaièiø: " << endl;
 
                 cin >> n;
+
+                if(cin.fail() )
+                {
+                    cout << "[ERROR]: Praðome ávesti skaièiø. Áveskite per naujo. " << endl;
+                    cout << "Áveskite teigiamà sveikàjá skaièiø: " << endl;
+                    cin.clear();
+                    cin.ignore();
+                    cin >> n;
+                }
 
                 FizzBuzz(n);
 
