@@ -35,6 +35,13 @@ void zaidimas()
         cout << "Bandykite atspëti skaièiø nuo 1 iki 100: " << endl;
         cin >> inputGuessNumber;
 
+        if(inputGuessNumber < 1 || inputGuessNumber > 100)
+        {
+            cout << "[ERROR]: Ávestas skaièius negali bûti 0 arba didesnis uş 100!" << endl;
+            cout << "Bandykite atspëti skaièiø nuo 1 iki 100: (Áveskite per naujo)" << endl;
+            cin >> inputGuessNumber;
+        }
+
         if(inputGuessNumber < randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo maşesnis uş skaièiø kurá reikia atspëti" << endl;
         else if(inputGuessNumber > randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo didesnis uş skaièiø kurá reikia atspëti" << endl;
     }
