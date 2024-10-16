@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool IsCharVowel(char letter) // Ar skaicius yra balsis
+bool IsCharVowel(const char letter) // Ar skaicius yra balsis
 {
     char vowelsList[10] = { 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' };
 
@@ -46,6 +46,7 @@ void FizzBuzz(int n)
     {
         if(i % 3 == 0) cout << i << " - Fizz" << endl;
         if(i % 5 == 0) cout << i << " - Buzz" << endl;
+        if(i % 3 == 0 && i % 5 == 0) cout << i << " - FizzBuzz" << endl;
     }
 }
 
@@ -131,6 +132,6 @@ int main()
                 continue;
             }
         }
+        continue;
     }
-    return 0;
 }
