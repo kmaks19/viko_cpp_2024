@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
+#include <ctime>
 
 using namespace std;
 
-bool IsCharVowel(char letter)
+bool IsCharVowel(char letter) // Ar skaicius yra balsis
 {
     char vowelsList[10] = { 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' };
 
@@ -14,19 +15,49 @@ bool IsCharVowel(char letter)
     return false;
 }
 
-int MaxDivider(int skaicius1, int skaicius2)
+int MaxDivider(int skaicius1, int skaicius2) // Didziausias daliklis tarp dvieju skaitmenu
 {
     while(abs(skaicius1) && abs(skaicius2))
         if(abs(skaicius1) > abs(skaicius2)) skaicius1 %= skaicius2;
-            else skaicius2 %= skaicius1;
+        else skaicius2 %= skaicius1;
     return skaicius1 + skaicius2;
+}
+
+void zaidimas()
+{
+    const int randomNumber = rand() % 100 + 1;
+    int inputGuessNumber;
+    cout << "[DEBUG]: Sistemos sugeneruotas skaièius yra: " << randomNumber << endl;
+
+    while(inputGuessNumber != randomNumber)
+    {
+        cout << "Bandykite atspëti skaièiø nuo 1 iki 100: " << endl;
+        cin >> inputGuessNumber;
+
+        if(inputGuessNumber < randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo maşesnis uş skaièiø kurá reikia atspëti" << endl;
+        else if(inputGuessNumber > randomNumber) cout << "Ávestas skaièius " << inputGuessNumber << " buvo didesnis uş skaièiø kurá reikia atspëti" << endl;
+    }
+    if(inputGuessNumber == randomNumber) cout << "Sveikiname! Atspëjote! Skaièius buvo " << randomNumber << endl;
+}
+
+void FizzBuzz(int n)
+{
+    for(int i = 1; i <= n; i++)
+    {
+        if(i % 3 == 0) cout << i << " - Fizz" << endl;
+        if(i % 5 == 0) cout << i << " - Buzz" << endl;
+    }
 }
 
 int main()
 {
     system("chcp 1257");
+
+    srand(time(0));
+
     while(true)
     {
+        // Meniu
         cout << "Pradşia" << endl;
         cout << "-----------------------------" << endl;
         cout << "Pasirinkite norimà funkcijà: " << endl;
@@ -62,7 +93,7 @@ int main()
             {
                 int skaitmenys[2];
 
-                int array_length = sizeof(skaitmenys) / sizeof(skaitmenys[0]);
+                int array_length = sizeof(skaitmenys) / sizeof(skaitmenys[0]); // Masyvo ilgis
 
                 for(int i = 0; i < array_length; i++)
                 {
@@ -76,11 +107,17 @@ int main()
             }
             case 3:
             {
-
+                zaidimas();
+                continue;
             }
             case 4:
             {
+                int n;
+                cout << "Áveskite teigiamà sveikàjá skaièiø: " << endl;
 
+                cin >> n;
+
+                FizzBuzz(n);
             }
             case 5:
             {
@@ -91,19 +128,9 @@ int main()
             {
                 cout << "Ávestas neteisingas pasirinkimas" << endl;
                 cout << "Prağome ávesti per naujo: " << endl;
-
-                cout << "-----------------------------" << endl;
-                cout << "1. Tikrinimas ar ávesta raidë yra balsë" << endl;
-                cout << "2. Rasti didşiausià daliklá tarp dviejø ávestø skaitmenø" << endl;
-                cout << "3. Mini şaidimas, kuris sugeneruoja atsitiktiná skaièiø nuo 1 iki 100" << endl;
-                cout << "4. FizzBuzz" << endl;
-                cout << "5. Iğeiti iğ programos" << endl;
-                cout << "-----------------------------" << endl;
-
-                cin >> choice;
+                continue;
             }
         }
-        break;
     }
     return 0;
 }
