@@ -1,16 +1,18 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <array>
+#include <cctype>
 
 using namespace std;
 
 bool IsCharVowel(const char letter) // Ar skaicius yra balsis
 {
-    char vowelsList[10] = { 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' };
+    char vowelsList[5] = { 'A', 'E', 'I', 'O', 'U'};
 
     for(char i : vowelsList)
     {
-        if(letter == i) return true;
+        return (letter == i || toupper(letter) == i) ? true : false; // Toupper - pavertimas didþiosiomis, kad nebûtø skirtumo ar ávesta maþoji ar didþioji raidë
     }
     return false;
 }
@@ -40,7 +42,7 @@ void zaidimas()
     if(inputGuessNumber == randomNumber) cout << "Sveikiname! Atspëjote! Skaièius buvo " << randomNumber << endl;
 }
 
-void FizzBuzz(int n)
+void FizzBuzz(const int n)
 {
     for(int i = 1; i <= n; i++)
     {
@@ -54,7 +56,7 @@ int main()
 {
     system("chcp 1257");
 
-    srand(time(0));
+    srand(time(nullptr));
 
     while(true)
     {
@@ -75,6 +77,13 @@ int main()
 
         cin >> choice;
 
+        if(cin.fail() )
+        {
+            cout << "[ERROR] Ávedimo klaida. Praðome ávesti skaièiø" << endl;
+            cin.clear();
+            cin.ignore();
+        }
+
         switch(choice)
         {
             case 1:
@@ -85,8 +94,13 @@ int main()
 
                 cin >> letter;
 
-                if(IsCharVowel(letter)) cout << "Ávesta raidë yra balsis" << endl;
-                else cout << "Ávesta raidë nëra balsis" << endl;
+                if(!isalpha(letter))
+                {
+                    cout << "[ERROR]: Ávesti privalote raidæ!" << endl;
+
+                }
+
+                (IsCharVowel(letter)) ? cout << "Ávesta raidë yra balsis" << endl : cout << "Ávesta raidë nëra balsis" << endl;
 
                 continue;
             }
@@ -94,7 +108,7 @@ int main()
             {
                 int skaitmenys[2];
 
-                int array_length = sizeof(skaitmenys) / sizeof(skaitmenys[0]); // Masyvo ilgis
+                const int array_length = size(skaitmenys); // Masyvo ilgis
 
                 for(int i = 0; i < array_length; i++)
                 {
@@ -119,6 +133,8 @@ int main()
                 cin >> n;
 
                 FizzBuzz(n);
+
+                continue;
             }
             case 5:
             {
@@ -132,6 +148,5 @@ int main()
                 continue;
             }
         }
-        continue;
     }
 }
