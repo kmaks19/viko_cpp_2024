@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Spalio_16d_DvimaciaiMasyvai",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Spalio_16d_DvimaciaiMasyvai::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Spalio_16d_DvimaciaiMasyvai-Debug-5628a095fd039fdecf9f.json",
+					"name" : "Spalio_16d_DvimaciaiMasyvai",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_16d_DvimaciaiMasyvai/cmake-build-debug",
+		"source" : "C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Paprastos_Uzduoteles_Rugsejis/Spalio_16d_DvimaciaiMasyvai"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
