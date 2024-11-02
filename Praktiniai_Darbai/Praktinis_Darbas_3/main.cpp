@@ -169,7 +169,12 @@ int main(){
                         //Decrypt
                         break;
                     }
+                    default: {
+                        cout << "[KLAIDA]: SWITCH FAULT" << endl;
+                        break;
+                    }
                 }
+                break;
             }
             case 2: {
                 switch(menu_option)
@@ -179,11 +184,21 @@ int main(){
                         break;
                     }
                     case 2: {
-                        //Decrypt
+                            //Decrypt
+                    }
+                    default: {
+                        cout << "[KLAIDA]: SWITCH FAULT" << endl;
+                        break;
                     }
                 }
+                break;
+            }
+            default: {
+                cout << "[KLAIDA]: SWITCH FAULT" << endl;
+                break;
             }
         }
+        break;
     }
     return 0;
 }
