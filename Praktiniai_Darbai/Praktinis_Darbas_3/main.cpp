@@ -94,9 +94,9 @@ int main(){
 
             if(alphabet_option != 2) // JEIGU NE ASCII KODUOTE VERÈIAME Á DIDÞIASIAS RAIDES.
                 for(char &al : EW_Array)
-                    al = static_cast<char>(toupper(al));
+                    al = toupper(al);
 
-            if (cin.fail() || strlen(EW_Array) > 25 || strlen(EW_Array) < 1 || !IsUsingAllowedSymbols(EW_Array, (alphabet_option == 1) ? LT_ABC_ARRAY : ASCII_ALPHABET_ARRAY, static_cast<int>(strlen(EW_Array)),static_cast<int>(strlen_alphabet)))
+            if (cin.fail() || strlen(EW_Array) > 25 || strlen(EW_Array) < 1 || !IsUsingAllowedSymbols(EW_Array, (alphabet_option == 1) ? LT_ABC_ARRAY : ASCII_ALPHABET_ARRAY, strlen(EW_Array),strlen_alphabet))
             {
                 for(char &xd : EW_Array)
                     xd = 0; // Nustatome masyva kaip 0
@@ -118,9 +118,9 @@ int main(){
 
             if(alphabet_option != 2) // JEIGU NE ASCII KODUOTE VERÈIAME Á DIDÞIASIAS RAIDES.
                 for(char &toup : KEY_ARRAY) // &toup representuoja masyva, ir apacioje peraso ji tiesiog, paprastesnis masyvo naudojimas.. nereikia rasyt x < ; x++ .. iskarto nuo min iki max iesko
-                    toup = static_cast<char>(toupper(toup)); // Verèiame raktà didþiosiomis raidëmis
+                    toup = toupper(toup); // Verèiame raktà didþiosiomis raidëmis
 
-            if(!IsUsingAllowedSymbols(KEY_ARRAY, (alphabet_option) ? LT_ABC_ARRAY : ASCII_ALPHABET_ARRAY, static_cast<int>(strlen(KEY_ARRAY)), static_cast<int>(strlen_alphabet)))
+            if(!IsUsingAllowedSymbols(KEY_ARRAY, (alphabet_option) ? LT_ABC_ARRAY : ASCII_ALPHABET_ARRAY, strlen(KEY_ARRAY), strlen_alphabet))
             {
                 for(char &xd : KEY_ARRAY)
                     xd = 0;
@@ -136,7 +136,7 @@ int main(){
         if(strlen(KEY_ARRAY) < strlen(EW_Array)) // Jeigu ðifravimo raktas trumpesnis uþ pradiná tekstà
         {
             int x = 0;
-            for(int i = static_cast<int>(strlen(KEY_ARRAY)); i < strlen(EW_Array); i++)
+            for(int i = strlen(KEY_ARRAY); i < strlen(EW_Array); i++)
             {
                 if(KEY_ARRAY[x] == KEY_ARRAY[i-1])
                 {
