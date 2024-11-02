@@ -6,18 +6,19 @@ using namespace std;
 
 constexpr int Default_Array_Size = 30;
 
-constexpr char LT_ABC_ARRAY[32] = {
-    'A', 'À', 'B', 'C', 'È', 'D', 'E', 'Æ', 'Ë', 'F', 'G', 'H', 'I', 'Á', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R',
-    'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ'
+const char LT_ABC_ARRAY[32] = // Abëcëlë saugojama masyve.
+{
+    'A', 'À', 'B', 'C', 'È', 'D', 'E', 'Æ', 'Ë', 'F', 'G', 'H', 'I', 'Á', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ'
 };
 
-constexpr char ASCII_ALPHABET_ARRAY[94] = {
-    '!', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-',
-    '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    ':', ';', '<', '=', '>', '?', '@',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^',
-    '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+const char ASCII_ALPHABET_ARRAY[94] =
+{
+    '!', '\u0021', '#', '$', '%', '&', '\u0027', '(', ')', '*', '+', ',', '-', \
+    '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', \
+    ':', ';', '<', '=', '>', '?', '@', \
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', \
+    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\u005C', ']', '^', \
+    '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', \
     'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'
 };
 
@@ -32,6 +33,51 @@ bool IsUsingAllowedSymbols(const char EWArray[], const char ALPHABET_ARRAY[], co
     return (x == EWArray_STRLEN) ? true : false;
 }
 
+void Encrypt(const char EWArray[], const char KEY_ARRAY[], char FINAL_ARRAY[], const int ALPHABET_ARRAY_STRLEN, const int EWArray_STRLEN, const int ALPHABET_OPTION){
+    // ALPHABET_OPTION Koduote
+    // EW_ARRAY Pradinio zodzio masyvas
+    // KEY_ARRAY Ðifravimo rakto masyvas
+    // ALPHABET_ARRAY_STRLEN Abëcëlës masyvo ilgis
+    // EWArray_STRLEN - Pradinio masyvo zodzio ilgis
+    // FINAL_ARRAY - Galutinis masyvas, kuriame saugomas galutinis þodis uþðifruotas
+
+    for(int i = 0; i < EWArray_STRLEN; i++)
+    {
+        int M = 0, K = 0; // Ðie kintamieji nurodys pradinio ir ðifravimo þodþio pozicijà ALFABETO masyve.
+
+        for(int j = 0; j < ALPHABET_ARRAY_STRLEN; j++)
+        {
+            switch(ALPHABET_OPTION)
+            {
+                case 1: {
+                    if(LT_ABC_ARRAY[j] == EWArray[i]) M = j;
+                    if(LT_ABC_ARRAY[j] == KEY_ARRAY[i]) K = j;
+                }
+                case 2: {
+                    if(ASCII_ALPHABET_ARRAY[j] == EWArray[i]) M = j;
+                    if(ASCII_ALPHABET_ARRAY[j] == KEY_ARRAY[i]) K = j;
+                }
+            }
+        }
+        int finalnumber = (M+K) % ALPHABET_ARRAY_STRLEN;
+
+        switch(ALPHABET_OPTION)
+        {
+            case 1: {
+                FINAL_ARRAY[i] = LT_ABC_ARRAY[finalnumber];
+                break;
+            }
+            case 2: {
+                FINAL_ARRAY[i] = ASCII_ALPHABET_ARRAY[finalnumber];
+                break;
+            }
+        }
+    }
+
+    cout << "Uþðifruotas þodis ";
+    for(int zx = 0; zx < EWArray_STRLEN; zx++)
+        cout << FINAL_ARRAY[zx];
+}
 
 int main(){
     system("chcp 1257");
@@ -162,7 +208,7 @@ int main(){
                 switch(menu_option)
                 {
                     case 1: {
-
+                        Encrypt(EW_Array, KEY_ARRAY, F_ARRAY, strlen_alphabet, strlen(EW_Array), alphabet_option);
                         break;
                     }
                     case 2: {
