@@ -4,82 +4,186 @@
 
 using namespace std;
 
-const char LT_ABC_ARRAY[32] =
-{
-    'A', 'À', 'B', 'C', 'È', 'D', 'E', 'Æ', 'Ë', 'F', 'G', 'H', 'I', 'Á', 'Y', 'J', \
-    'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ'
+constexpr int Default_Array_Size = 30;
+
+constexpr char LT_ABC_ARRAY[32] = {
+    'A', 'À', 'B', 'C', 'È', 'D', 'E', 'Æ', 'Ë', 'F', 'G', 'H', 'I', 'Á', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R',
+    'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ'
 };
 
-const char ASCII_ARRAY[94] =
-{
-    '!', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', \
-    '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', \
-    ':', ';', '<', '=', '>', '?', '@', \
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', \
-    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', \
-    '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', \
+constexpr char ASCII_ALPHABET_ARRAY[94] = {
+    '!', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-',
+    '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    ':', ';', '<', '=', '>', '?', '@',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^',
+    '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
     'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'
 };
 
-const int MAX_Array_Length = 26;
+bool IsUsingAllowedSymbols(const char EWArray[], const char ALPHABET_ARRAY[], const int EWArray_STRLEN, const int ALPHABET_ARRAY_STRLEN){
+    int x = 0;
+    for(int i = 0; i < EWArray_STRLEN; i++){
+        for(int j = 0; j < ALPHABET_ARRAY_STRLEN; j++){
+            if(EWArray[i] == ALPHABET_ARRAY[j])
+                x++;
+        }
+    }
+    return (x == EWArray_STRLEN) ? true : false;
+}
 
-int main()
-{
+
+int main(){
     system("chcp 1257");
 
-    while(true)
+    while (true)
     {
-        cout << "Ðifravimo & Deðifravimo sistema" << endl;
-        cout << "Pasirinkite: " << endl;
-        cout << "1 - Uþðifruoti tekstà" << endl;
-        cout << "2 - Deðifruoti tekstà" << endl;
+        cout << "Ðifravimo/Deðifravimo sistema\nPasirinkite: \n1. Ðifruoti tekstà\n2. Deðifruoti tekstà\n";
 
-        int choice; // Meniu pasirinkimas
+        int menu_option;
+        cin >> menu_option;
 
-        cin >> choice;
-
-        if(choice > 2 || choice < 1)
+        if (cin.fail() || menu_option < 1 || menu_option > 2)
         {
-            cout << "[KLAIDA]: Tokio meniu pasirinkimo nëra" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "[KLAIDA]: Pasirinkti privalote tarp [1-2] !\n";
             continue;
         }
 
-        cout << "Pasirinkite:\n1 - LT abëcëlë\n2 - ASCII koduotë\n";
-        int alphabet_choice; // Koduotës pasirinkimas.
-        cin >> alphabet_choice;
-
-        int n = (alphabet_choice == 1) ? sizeof(LT_ABC_ARRAY) / sizeof(LT_ABC_ARRAY[0]) : sizeof(ASCII_ARRAY) / sizeof(ASCII_ARRAY[0]);
-
-        if (alphabet_choice < 1 || alphabet_choice > 2)
-        {
-            cout << "[KLAIDA]: Toks pasirinkimas negalimas (neegzistuoja)!" << endl;
-            continue;
-        }
-
-        char M[28] = {0};
+        int alphabet_option, strlen_alphabet;
 
         while(true)
         {
-            cout << "Áveskite pradiná tekstà [MAX 25 SIMB]: " << endl;
+            cout << "Pasirinkite abëcëlæ: \n1 - Lietuviø abëcëlë\n2 - ASCII koduotë\n";
 
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> alphabet_option;
 
-            cin >> M;
-
-            const int length = strlen(M); // Masyvo raidziu kiekio ilgssis.
-
-            if(length > MAX_Array_Length || length < 1)
+            if(cin.fail() | alphabet_option < 1 || alphabet_option > 2)
             {
-                cout <<"\n[KLAIDA]: Pradinis tekstas negali bûti ilgesnis negu 25 simboliai arba buti 0 simboliu!\n";
+                cout << "[KLAIDA]: Pasirinkti privalote tarp [1-2]!" << endl;
+                continue;
+            }
+
+            switch (alphabet_option)
+            {
+                case 1: {
+                    strlen_alphabet = sizeof(LT_ABC_ARRAY) / sizeof(LT_ABC_ARRAY[0]);
+                    break;
+                }
+                case 2: {
+                    strlen_alphabet = sizeof(ASCII_ALPHABET_ARRAY) / sizeof(ASCII_ALPHABET_ARRAY[0]);
+                    break;
+                }
+                default: {
+                    cout << "[KLAIDA]: SWITCH: DEFAULT FAULT \n";
+                    return 0;
+                }
+            }
+            break;
+        }
+        /* EW_Array - EntryWord_Array
+         * Arba kitaip pradinio þodþio masyvas
+         */
+        char EW_Array[Default_Array_Size] = {0};
+
+        while (true)
+        {
+            cout << "Praðome ávesti pradiná tekstà:\n\t• Pradinio teksto ilgis negali bûti ilgesnis nei 25 simboliai\n\t• Negali bûti tuðèias!\n\t• Ávesti galite tik leidþiamus pasirinktos abëcëlës simbolius\n";
+            cin >> EW_Array;
+
+            if(alphabet_option != 2) // JEIGU NE ASCII KODUOTE VERÈIAME Á DIDÞIASIAS RAIDES.
+                for(char &al : EW_Array)
+                    al = static_cast<char>(toupper(al));
+
+            if (cin.fail() || strlen(EW_Array) > 25 || strlen(EW_Array) < 1 || !IsUsingAllowedSymbols(EW_Array, (alphabet_option == 1) ? LT_ABC_ARRAY : ASCII_ALPHABET_ARRAY, static_cast<int>(strlen(EW_Array)),static_cast<int>(strlen_alphabet)))
+            {
+                for(char &xd : EW_Array)
+                    xd = 0; // Nustatome masyva kaip 0
+
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "[KLAIDA]: Pradinio teksto ilgis negali bûti maþesnis negu 1 simbolis arba didesnis negu 25\nTaip pat já gali sudaryti tik simboliai leistini pasirinktoje abëcëlëje\n";
                 continue;
             }
             break;
         }
 
+        char KEY_ARRAY[Default_Array_Size] = {0};
 
+        while(true)
+        {
+            cout << "Praðome ávesti raktà: \n\t• Raktas negali bûti ilgesnis nei 25 simboliai\n\t• Laukelis negali bûti tuðèias\n\t• Ávesti galite tik leidþiamus pasirinktos abëcëlës simbolius\n";
+            cin >> KEY_ARRAY;
 
-        break;
+            if(alphabet_option != 2) // JEIGU NE ASCII KODUOTE VERÈIAME Á DIDÞIASIAS RAIDES.
+                for(char &toup : KEY_ARRAY) // &toup representuoja masyva, ir apacioje peraso ji tiesiog, paprastesnis masyvo naudojimas.. nereikia rasyt x < ; x++ .. iskarto nuo min iki max iesko
+                    toup = static_cast<char>(toupper(toup)); // Verèiame raktà didþiosiomis raidëmis
+
+            if(!IsUsingAllowedSymbols(KEY_ARRAY, (alphabet_option) ? LT_ABC_ARRAY : ASCII_ALPHABET_ARRAY, static_cast<int>(strlen(KEY_ARRAY)), static_cast<int>(strlen_alphabet)))
+            {
+                for(char &xd : KEY_ARRAY)
+                    xd = 0;
+
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "[KLAIDA]: Rakto ilgis negali bûti maþesnis negu 1 simbolis arba didesnis negu 25\nTaip pat já gali sudaryti tik simboliai leistini pasirinktoje abëcëlëje\n";
+                continue;
+            }
+            break;
+        }
+
+        if(strlen(KEY_ARRAY) < strlen(EW_Array)) // Jeigu ðifravimo raktas trumpesnis uþ pradiná tekstà
+        {
+            int x = 0;
+            for(int i = static_cast<int>(strlen(KEY_ARRAY)); i < strlen(EW_Array); i++)
+            {
+                if(KEY_ARRAY[x] == KEY_ARRAY[i-1])
+                {
+                    x++;
+                    KEY_ARRAY[i] = KEY_ARRAY[x];
+                }
+                else
+                {
+                    KEY_ARRAY[i] = KEY_ARRAY[x];
+                    x++;
+                }
+            }
+        }
+
+        /* F_ARRAY - Final ARRAY
+         * Galutinis þodis.
+         */
+        char F_ARRAY[Default_Array_Size]; //
+
+        switch(alphabet_option)
+        {
+            case 1: {
+                switch(menu_option)
+                {
+                    case 1: {
+
+                        break;
+                    }
+                    case 2: {
+                        //Decrypt
+                        break;
+                    }
+                }
+            }
+            case 2: {
+                switch(menu_option)
+                {
+                    case 1: {
+                        //Encrypt
+                        break;
+                    }
+                    case 2: {
+                        //Decrypt
+                    }
+                }
+            }
+        }
     }
     return 0;
 }
