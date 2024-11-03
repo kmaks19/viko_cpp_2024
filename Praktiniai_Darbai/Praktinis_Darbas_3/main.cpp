@@ -1,3 +1,6 @@
+// Daugkur prie switch nebus default, nes paraðius return 0; arba system("pause") ta default vieta neturi suveikt bet
+// suveikia.
+
 #include <iostream>
 #include <cstring>
 #include <limits>
@@ -6,13 +9,13 @@ using namespace std;
 
 constexpr int Default_Array_Size = 30;
 
-const char LT_ABC_ARRAY[32] = // Abëcëlë saugojama masyve.
+constexpr char LT_ABC_ARRAY[32] = // Abëcëlë saugojama masyve.
 {
     'A', 'À', 'B', 'C', 'È', 'D', 'E', 'Æ', 'Ë', 'F', 'G', 'H', 'I', 'Á', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R',
     'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ'
 };
 
-const char ASCII_ALPHABET_ARRAY[93] =
+constexpr char ASCII_ALPHABET_ARRAY[93] =
 {
     '!', '\"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7',
     '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
@@ -29,8 +32,7 @@ bool IsUsingAllowedSymbols(const char Masyvas[], const char ABCMasyvas[], const 
                 x++;
         }
     }
-    if(x == P_MasyvoIlgis_STRLEN) return true;
-    else return false;
+    return (x == P_MasyvoIlgis_STRLEN) ? true : false;
 }
 
 void Encrypt(const char P[], const char R[], char G[], const int n, const int P_MasyvoIlgis_STRLEN, const int koduote){ // MasyvoIlgis 30.
