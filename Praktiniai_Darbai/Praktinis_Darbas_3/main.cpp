@@ -7,7 +7,7 @@
 
 using namespace std;
 
-constexpr int Default_Array_Size = 30;
+const int Default_Array_Size = 30;
 
 constexpr char LT_ABC_ARRAY[32] = // Abëcëlë saugojama masyve.
 {
