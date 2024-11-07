@@ -56,12 +56,12 @@ void Encrypt(const char P[], const char R[], char G[], const int n, const int P_
 
         int final_number = 0;
 
-        cout << "X = " << X << endl;
-        cout << "Y = " << Y << endl;
+        /*cout << "X = " << X << endl;
+        cout << "Y = " << Y << endl;*/
 
         final_number = (X + Y) % n; // C(itasis) = M(itasis) + K(itasis ) ( mod n)
 
-        cout << X <<" + " << Y << " % " << n << " = " << final_number << endl;
+       //cout << X <<" + " << Y << " % " << n << " = " << final_number << endl;
 
         switch(koduote){
             case 1:{
