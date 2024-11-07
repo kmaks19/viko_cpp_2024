@@ -74,7 +74,7 @@ void Encrypt(const char P[], const char R[], char G[], const int n, const int P_
             }
         }
     }
-    cout << "Uþðifruotas þodis: ";
+    cout << "Uþðifruotas þodis: " << endl;
     for(int al = 0; al < P_MasyvoIlgis_STRLEN; al++)
         cout << G[al];
 }
@@ -88,10 +88,12 @@ void Decrypt(char P[], const char R[], const int n, const int P_MasyvoIlgis_STRL
                 case 1: {
                     if(LT_ABC_ARRAY[j] == P[i]) X = j;
                     if(LT_ABC_ARRAY[j] == R[i]) Y = j;
+                    break;
                 }
                 case 2:{
                     if(ASCII_ALPHABET_ARRAY[j] == P[i]) X = j;
                     if(ASCII_ALPHABET_ARRAY[j] == R[i]) Y = j;
+                    break;
                 }
             }
         }
@@ -121,17 +123,22 @@ int main(){
 
     while(true)
     {
-        cout << "Ðifravimo/Deðifravimo sistema\n";
-        cout << "» Pasirinkite: \n1 - Uþðifruoti tekstà\n2 - Deðifruoti tekstà\n» ÁVEDIMAS: ";
+        cout << "\nÐifravimo/Deðifravimo sistema\n";
+        cout << "» Pasirinkite: \n1 - Uþðifruoti tekstà\n2 - Deðifruoti tekstà\n3 - Iðeiti\n ÁVEDIMAS: ";
 
         int choice;
         cin >> choice;
 
-        if(cin.fail() || choice > 2 || choice < 1){
+        if(cin.fail() || choice > 3 || choice < 1){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "[KLAIDA]: Privalote pasirinkti [1-2] !\n";
+            cout << "[KLAIDA]: Privalote pasirinkti [1-3] !\n";
             continue;
+        }
+
+        if(choice == 3) {
+            cout << "» PASIRINKOTE IÐEITI IÐ PROGRAMOS" << endl;
+            break;
         }
 
         int koduote, n;
@@ -282,8 +289,6 @@ int main(){
                 break;
             }
         }
-        break;
     }
-
     return 0;
 }
