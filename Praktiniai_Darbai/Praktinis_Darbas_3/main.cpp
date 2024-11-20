@@ -31,7 +31,6 @@ bool IsUsingAllowedSymbols(const int encoding, const char Array[]){
                 total++;
         }
         return (total == Array_Length) ? true : false;
-
         // Tikrina ar raidës Integer reikðmë yra ribose [33-126] pagal ASCII lentelës simbolius, kurie yra reikalingi
         // Jeigu visos raidës yra tose ribose, graþina true reikðmæ, jei ne false.
     }
@@ -110,10 +109,13 @@ void Decrypt(const int encoding, const char P_Array[], const char R_Array[], cha
         }
         case 2: {
             for(int i = 0; i < Array_Length; i++){
-                const int ASCII_Value_P = static_cast<int>(P_Array[i]);
-                const int ASCII_Value_R = static_cast<int>(R_Array[i]);
+                const int ASCII_Value_P = static_cast<int>(P_Array[i]); // Verèiame char á int
+                const int ASCII_Value_R = static_cast<int>(R_Array[i]); // Verèiame char i int
                 if( ASCII_Value_P >= 33 && ASCII_Value_P <= 126 && ASCII_Value_R >= 33 && ASCII_Value_R <= 126 )// Jeigu reikðmë [33-126] Ribose tikriname
                     Final_Array_ASCII[i] = (ASCII_Value_P - ASCII_Value_R + abc_letter_count ) % abc_letter_count; // ci = mi+ki(mod n)
+
+                if(Final_Array_ASCII[i] < 33)
+                    Final_Array_ASCII[i] += abc_letter_count;
             }
             break;
         }
