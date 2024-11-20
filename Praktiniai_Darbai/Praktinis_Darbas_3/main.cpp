@@ -1,215 +1,167 @@
-// Daugkur prie switch nebus default, nes paraðius return 0; arba system("pause") ta default vieta neturi suveikt bet
-// suveikia.
-
 #include <iostream>
 #include <cstring>
 #include <limits>
 
 using namespace std;
 
-const int Default_Array_Size = 30;
+constexpr int DEFAULT_ARRAY_SIZE = 30;
 
-constexpr char LT_ABC_ARRAY[32] = // Abëcëlë saugojama masyve.
+constexpr char LT_ABC_ARRAY[33] = // Abëcëlë saugojama masyve.
 {
     'A', 'À', 'B', 'C', 'È', 'D', 'E', 'Æ', 'Ë', 'F', 'G', 'H', 'I', 'Á', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R',
-    'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ'
+    'S', 'Ð', 'T', 'U', 'Ø', 'Û', 'V', 'Z', 'Þ', '\0' // \0 þymi masyvo pabaigà, be jo neveikia tinkamai kodas.
 };
 
-constexpr char ASCII_ALPHABET_ARRAY[93] =
-{
-    '!', '\"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7',
-    '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-    'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e',
-    'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z', '{', '|', '}',
-    '~'
-};
-
-bool IsUsingAllowedSymbols(const char Masyvas[], const char ABCMasyvas[], const int P_MasyvoIlgis_STRLEN, const int ABCIlgis){
-    int x = 0;
-    for(int i = 0; i < P_MasyvoIlgis_STRLEN; i++){
-        for(int j = 0; j < ABCIlgis; j++){
-            if(Masyvas[i] == ABCMasyvas[j])
-                x++;
-        }
+bool IsUsingAllowedSymbols(const int encoding, const char Array[]){
+    const int Array_Length = strlen(Array);
+    if(encoding == 1) { // JEI LT_ABC_ARRAY
+        int x = 0;
+        const int Encoding_Length = strlen(LT_ABC_ARRAY);
+        for(int i = 0; i < Array_Length; i++)
+            for(int j = 0; j < Encoding_Length; j++)
+                if(Array[i] == LT_ABC_ARRAY[j])
+                    x++;
+        return (x == Array_Length) ? true : false;
+        // Tikrinama ar tam tikrame masyve raidës atitinka LT abëcëlës masyvà, tarkime jei yra bent vienas neleistinas þenklas graþins false.
     }
-    return (x == P_MasyvoIlgis_STRLEN) ? true : false;
+    else if(encoding == 2) { // Jeigu ASCII koduotë
+        int total = 0;
+        for(int xd = 0; xd < Array_Length; xd++){
+            if(int(Array[xd]) >= 33 && int(Array[xd]) <= 126)
+                total++;
+        }
+        return (total == Array_Length) ? true : false;
+
+        // Tikrina ar raidës Integer reikðmë yra ribose [33-126] pagal ASCII lentelës simbolius, kurie yra reikalingi
+        // Jeigu visos raidës yra tose ribose, graþina true reikðmæ, jei ne false.
+    }
+    else {
+        cout << "[KLAIDA]: Function IsUsingAllowedSymbols Fault, encoding is neither 1 nor 2\nPrograma stabdoma";
+        system("pause");
+        return false;
+    }
 }
 
-void Encrypt(const char P[], const char R[], char G[], const int n, const int P_MasyvoIlgis_STRLEN, const int koduote){ // MasyvoIlgis 30.
-    for(int i = 0; i < P_MasyvoIlgis_STRLEN; i++){
-        int X = 0, Y = 0; // Kintamieji kurie nurodys pradinio þodþio ir ðifravimo rakto X-osios raidës vietà ABËCËLËS MASYVE.
+void Encrypt(const int encoding, const char P_Array[], const char R_Array[], char Final_Array[], const int abc_letter_count){
+    switch(encoding){
+        case 1: { // LT encoding
+            const int Array_Length = strlen(P_Array);
+            int M = 0, K = 0; // M(-itasis), K(-itasis)
+            for(int i = 0; i < Array_Length; i++){
+                for(int j = 0; j < abc_letter_count; j++){
+                    if(LT_ABC_ARRAY[j] == P_Array[i]) M = j;
+                    if(LT_ABC_ARRAY[j] == R_Array[i]) K = j;
+                }
 
-        for(int j = 0; j < n; j++){
-            switch(koduote){
-                case 1: {
-                    if(LT_ABC_ARRAY[j] == P[i]) X = j;
-                    if(LT_ABC_ARRAY[j] == R[i]) Y = j;
-                    break;
-                }
-                case 2:{
-                    if(ASCII_ALPHABET_ARRAY[j] == P[i]) X = j;
-                    if(ASCII_ALPHABET_ARRAY[j] == R[i]) Y = j;
-                    break;
-                }
+                int final_number = 0;
+                final_number = (M+K) % abc_letter_count; // Ðifravimas ci? mi+ki(mod n),
+
+                cout << "M+K = " << M << " + " << K << "= " << final_number << endl;
+
+                Final_Array[i] = LT_ABC_ARRAY[final_number]; // Dedame á galutiná masyvà.
             }
+            cout << "abc_letter_count: " << abc_letter_count << endl;
+            cout << "Array_Length: " << Array_Length << endl;
+            break;
         }
+        case 2: { // ASCII encoding
 
-        int final_number = 0;
 
-        /*cout << "X = " << X << endl;
-        cout << "Y = " << Y << endl;*/
-
-        final_number = (X + Y) % n; // C(itasis) = M(itasis) + K(itasis ) ( mod n)
-
-       //cout << X <<" + " << Y << " % " << n << " = " << final_number << endl;
-
-        switch(koduote){
-            case 1:{
-                G[i] = LT_ABC_ARRAY[final_number];
-                break;
-            }
-            case 2:{
-                G[i] = ASCII_ALPHABET_ARRAY[final_number];
-                break;
-            }
+            break;
         }
     }
-    cout << "Uþðifruotas þodis: " << endl;
-    for(int al = 0; al < P_MasyvoIlgis_STRLEN; al++)
-        cout << G[al];
-}
-
-void Decrypt(char P[], const char R[], const int n, const int P_MasyvoIlgis_STRLEN, const int koduote){ // n yra abc ilgis.
-    int X = 0, Y = 0; // Nurodys þodþio ir rakto raidës vietà abëcëlëje.
-
-    for(int i = 0; i < P_MasyvoIlgis_STRLEN; i++){
-        for(int j = 0; j < n; j++){
-            switch(koduote){
-                case 1: {
-                    if(LT_ABC_ARRAY[j] == P[i]) X = j;
-                    if(LT_ABC_ARRAY[j] == R[i]) Y = j;
-                    break;
-                }
-                case 2:{
-                    if(ASCII_ALPHABET_ARRAY[j] == P[i]) X = j;
-                    if(ASCII_ALPHABET_ARRAY[j] == R[i]) Y = j;
-                    break;
-                }
-            }
-        }
-        int final_number = X-Y + (n%n);
-
-        if(final_number < 0) final_number = n+(final_number);
-
-        switch(koduote){
-            case 1:{
-                P[i] = LT_ABC_ARRAY[final_number];
-                break;
-            }
-            case 2:{
-                P[i] = ASCII_ALPHABET_ARRAY[final_number];
-                break;
-            }
-        }
+    cout << "Uþðifruotas þodis: \n";
+    for(int al = 0; al < abc_letter_count; al++){
+        cout << Final_Array[al];
     }
-    cout << "Deðifruotas þodis: ";
-    for(int zx = 0; zx < P_MasyvoIlgis_STRLEN; zx++)
-        cout << P[zx];
 }
-
 
 int main(){
-    system("chcp 1257");
+    system("chcp 1257"); // Lietuviðkos raidës.
 
-    while(true)
-    {
-        cout << "\nÐifravimo/Deðifravimo sistema\n";
-        cout << "» Pasirinkite: \n1 - Uþðifruoti tekstà\n2 - Deðifruoti tekstà\n3 - Iðeiti\n ÁVEDIMAS: ";
+    while(true){
+        cout << "Ðifravimo / Deðifravimo sistema\n";
+        cout << "Pasirinkite: \n1 - Uþðifruoti tekstà\n2 - Deðifruoti tekstà\n3 - Iðeiti\n Ávedimas: ";
 
-        int choice;
-        cin >> choice;
+        int menu_choice; // Pasirinkimas menu
+        cin >> menu_choice;
 
-        if(cin.fail() || choice > 3 || choice < 1){
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "[KLAIDA]: Privalote pasirinkti [1-3] !\n";
-            continue;
+        if(cin.fail() || menu_choice > 3 || menu_choice < 1){
+            // Jeigu ávestas ne skaièius, arba neatitinka MENU ribø [1-3]
         }
 
-        if(choice == 3) {
-            cout << "» PASIRINKOTE IÐEITI IÐ PROGRAMOS" << endl;
+        if(menu_choice == 3){
+            cout << "» PASIRINKOTE IÐEITI IÐ PROGRAMOS\n";
             break;
         }
 
-        int koduote, n;
+        int encoding; // Koduotë - 1: LT; 2 - ASCII
+        int abc_letter_count; // Abëcëlës raidþiø strlen(), kiekis pvþ JONAS - 5
 
         while(true){
-            cout << "» Pasirinkite: \n1 - LT abëcëlë\n2 - ASCII koduotë\n» ÁVEDIMAS: ";
+            cout << "» Pasirinkite:\n1 - LT abëcëlë\n2 - ASCII koduotë\n» ÁVEDIMAS: ";
+            cin >> encoding;
 
-            cin >> koduote;
-
-            if(cin.fail() || koduote > 2 || koduote < 1){
+            if(cin.fail() || encoding > 2 || encoding < 1){
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                cout << "[KLAIDA]: Privalote pasirinkti tarp [1-2] !\n";
+                cout << "[KLAIDA]: Privalote pasirinkti tarp [1-2]\n";
                 continue;
             }
 
-            switch(koduote){
-                case 1:{
-                    n = sizeof(LT_ABC_ARRAY) / sizeof(LT_ABC_ARRAY[0]);
+            switch(encoding){
+            case 1: {
+                    // LT encoding
+                    abc_letter_count = sizeof(LT_ABC_ARRAY) / sizeof(LT_ABC_ARRAY[0]);
                     break;
                 }
-                case 2:{
-                    n = sizeof(ASCII_ALPHABET_ARRAY) / sizeof(ASCII_ALPHABET_ARRAY[0]);
+                case 2: {
+                    // ASCII encoding
+                    abc_letter_count = 93; // Ið viso ið ASCII table 93 simboliai reikalingi
                     break;
                 }
-                default:{
-                    cout << "[KLAIDA]: SWITCH DEFAULT FAULT\n";
+                default: {
+                    cout << "[KLAIDA]: switch(encoding) — default case FAULT\n";
                     break;
                 }
             }
             break;
         }
 
-        char P[Default_Array_Size] = {0};
+        char P[DEFAULT_ARRAY_SIZE] = {0}; // Pradinis þodis
 
         while(true){
             cout << "» Áveskite pradiná tekstà:\n\t• Pradinis tekstas negali bûti ilgesnis nei 25 simboliai\n\t\• Negali bûti trumpesnis nei 1 simbolis\n\t• Gali bûti sudarytas tik ið abëcëlëje esanèiø simboliø\n» ÁVEDIMAS: ";
-
             cin >> P;
 
-            if(koduote != 2){
+            if(encoding != 2){ // Jei LT koduotë, verèiame automatiðkai á didþiàsias raides.
                 for(int i = 0; i < strlen(P); i++)
                     P[i] = toupper(P[i]);
             }
 
-            switch(koduote)
-            {
+            switch(encoding){
                 case 1: {
-                   if(cin.fail() || !IsUsingAllowedSymbols(P, LT_ABC_ARRAY, strlen(P), n) || strlen(P) > 25 || strlen(P) < 1){
-                       cin.clear();
-                       cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-                       for(int x = 0; x < 30; x++)
-                           P[x] = 0;
-
-                       cout << "[KLAIDA]: Pradinis tekstas neatitinka vieno ið reikalavimø!\n";
-                       continue;
-                   }
-                    for(int xd = 0; xd < strlen(P); xd++)
-                         P[xd] = toupper(P[xd]); // Paverèiame raides didþiosiomis
-
-                    break;
-                }
-                case 2: {
-                    if(cin.fail() || !IsUsingAllowedSymbols(P, ASCII_ALPHABET_ARRAY, strlen(P), n) || strlen(P) > 25 || strlen(P) < 1){
+                    if(cin.fail() || !IsUsingAllowedSymbols(encoding, P) || strlen(P) > 25 || strlen(P) < 1){
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
                         for(int x = 0; x < 30; x++)
-                            P[x] = 0;
+                            P[x] = 0; // Tuðtiname pradinio þodþio masyvà
+
+                        cout << "[KLAIDA]: Pradinis tekstas neatitinka vieno ið reikalavimø!\n";
+                        continue;
+                    }
+
+                    break;
+                }
+                case 2: {
+                    if(cin.fail() || !IsUsingAllowedSymbols(encoding, P) || strlen(P) > 25 || strlen(P) < 1){
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                        for(int x = 0; x < 30; x++)
+                            P[x] = 0; // Tuðtiname pradinio þodþio masyvà
 
                         cout << "[KLAIDA]: Pradinis tekstas neatitinka vieno ið reikalavimø!\n";
                         continue;
@@ -220,39 +172,39 @@ int main(){
             break;
         }
 
-        char R[Default_Array_Size] = {0}; // Ilgis toks pats kaip pradinio þodþio.
+        char R[DEFAULT_ARRAY_SIZE] = {0}; // Raktas
 
         while(true){
-            cout << "» Áveskite raktà:\n\t• Raktas negali bûti ilgesnis nei pradinis tekstas\n\t\• Negali bûti trumpesnis nei 1 simbolis\n\t• Gali bûti sudarytas tik ið abëcëlëje esanèiø simboliø\n» ÁVEDIMAS: ";
 
+            cout << "» Áveskite raktà:\n\t• Raktas negali bûti ilgesnis nei pradinis tekstas\n\t\• Negali bûti trumpesnis nei 1 simbolis\n\t• Gali bûti sudarytas tik ið abëcëlëje esanèiø simboliø\n» ÁVEDIMAS: ";
             cin >> R;
 
-            switch(koduote)
-            {
+            if(encoding == 1)
+                for(int zx = 0; zx < strlen(R); zx++)
+                    R[zx] = toupper(R[zx]);
+
+            switch(encoding){
                 case 1: {
-                    if(cin.fail() || !IsUsingAllowedSymbols(P, LT_ABC_ARRAY, strlen(P), n) || strlen(R) > strlen(P) || strlen(P) < 1){
+                    if(cin.fail() || !IsUsingAllowedSymbols(encoding, R) || strlen(R) > strlen(P) || strlen(R) < 1){
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                        for(int x = 0; x < 30; x++)
-                            R[x] = 0;
+                        for(char & tustinti : R)
+                            tustinti = 0; // Tuðtiname rakto masyvà
 
                         cout << "[KLAIDA]: Raktas neatitinka vieno ið reikalavimø!\n";
                         continue;
                     }
 
-                    for(int zx = 0; zx < strlen(P); zx++)
-                        R[zx] = toupper(R[zx]);
-
                     break;
                 }
                 case 2: {
-                    if(cin.fail() || !IsUsingAllowedSymbols(P, ASCII_ALPHABET_ARRAY, strlen(P), n) || strlen(R) > strlen(P) || strlen(R) < 1){
+                    if(cin.fail() || !IsUsingAllowedSymbols(encoding, R) || strlen(R) > strlen(P) || strlen(R) < 1){
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                        for(int x = 0; x < 30; x++)
-                            R[x] = 0;
+                        for(char & tustinti : R)
+                            tustinti = 0;
 
                         cout << "[KLAIDA]: Raktas neatitinka vieno ið reikalavimø!\n";
                         continue;
@@ -263,7 +215,9 @@ int main(){
             break;
         }
 
-        if(strlen(R) < strlen(P)){ // Jeigu ðifravimo raktas trumpesnis uþ pradiná tekstà
+        if(strlen(R) < strlen(P)){
+            // Jeigu raktas yra trumpesnis uþ pradiná þodá, dadedame raides ir ilgá padarome vienodà
+            // PVÞ Þodis LABAS, Raktas KEY, trûksta dviejø raidþiø dadedame ið rakto pradþios KE, gausis KEYKE
             int x = 0;
             for(int i = strlen(R); i < strlen(P); i++){
                 if(R[x] == R[i-1]){
@@ -275,17 +229,16 @@ int main(){
                     x++;
                 }
             }
-        } // Pvþ Þodis LABAS, RAKTAS KEY, TRÛKSTA DVIEJØ RAIDÞIØ TAI DARAÐOMA, BUS KEYKE GALUTINIS.
+        }
 
-        char G[Default_Array_Size]; // Galutinis Masyvas tokio paèio ilgio koks pradinis þodis.
+        char G[DEFAULT_ARRAY_SIZE]; // Galutinio ðifruoto arba deðifruoto þodþio masyvas.
 
-        switch(choice){
+        switch(menu_choice){
             case 1: {
-                Encrypt(P, R, G, n, strlen(P), koduote);
+                Encrypt(encoding, P, R, G, abc_letter_count);
                 break;
             }
-            case 2:{
-                Decrypt(P, R, n, strlen(P), koduote);
+            case 2: {
                 break;
             }
         }
