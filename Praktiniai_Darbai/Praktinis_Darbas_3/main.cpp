@@ -27,7 +27,7 @@ bool IsUsingAllowedSymbols(const int encoding, const char Array[]){
     else if(encoding == 2) { // Jeigu ASCII koduotë
         int total = 0;
         for(int xd = 0; xd < Array_Length; xd++){
-            if(int(Array[xd]) >= 33 && int(Array[xd]) <= 126)
+            if(static_cast<int>(Array[xd]) >= 33 && static_cast<int>(Array[xd]) <= 126)
                 total++;
         }
         return (total == Array_Length) ? true : false;
@@ -42,11 +42,11 @@ bool IsUsingAllowedSymbols(const int encoding, const char Array[]){
     }
 }
 
-void Encrypt(const int encoding, const char P_Array[], const char R_Array[], char Final_Array[], const int abc_letter_count){
+void Encrypt(const int encoding, const char P_Array[], const char R_Array[], char Final_Array_LT[], int Final_Array_ASCII[], const int abc_letter_count){
+    const int Array_Length = strlen(P_Array);
+    int M = 0, K = 0; // M(-itasis), K(-itasis)
     switch(encoding){
         case 1: { // LT encoding
-            const int Array_Length = strlen(P_Array);
-            int M = 0, K = 0; // M(-itasis), K(-itasis)
             for(int i = 0; i < Array_Length; i++){
                 for(int j = 0; j < abc_letter_count; j++){
                     if(LT_ABC_ARRAY[j] == P_Array[i]) M = j;
@@ -56,24 +56,30 @@ void Encrypt(const int encoding, const char P_Array[], const char R_Array[], cha
                 int final_number = 0;
                 final_number = (M+K) % abc_letter_count; // Ðifravimas ci? mi+ki(mod n),
 
-                cout << "M+K = " << M << " + " << K << "= " << final_number << endl;
-
-                Final_Array[i] = LT_ABC_ARRAY[final_number]; // Dedame á galutiná masyvà.
+                Final_Array_LT[i] = LT_ABC_ARRAY[final_number]; // Dedame á galutiná masyvà.
             }
-            cout << "abc_letter_count: " << abc_letter_count << endl;
-            cout << "Array_Length: " << Array_Length << endl;
             break;
         }
         case 2: { // ASCII encoding
-
-
+            for(int i = 0; i < Array_Length; i++){
+                const int ASCII_Value_P = static_cast<int>(P_Array[i]); // Gauname ið simbolio ASCII reikðmæ pradinio þodþio (Pvþ ! = 33)
+                const int ASCII_Value_R = static_cast<int>(R_Array[i]); // Gauname ið simbolio ASCII reikðmæ rakto (pvþ ! = 33)
+                if( (ASCII_Value_P >= 33 && ASCII_Value_P <= 126) && (ASCII_Value_P >= 33 && ASCII_Value_R <= 126) ){ // Jeigu reikðmë [33-126] Ribose tikriname
+                    Final_Array_ASCII[i] = (ASCII_Value_P+ASCII_Value_R) % abc_letter_count; // ci = mi+ki(mod n)
+                    // Pvþ Pradinis þodis ! ir raktas ! = (33+33) % dalinta ið liekanos viso ASCII abëcëlëje esanèiø raidþiø: 66 % 93 gauname 66, tai ASCII koduotëje yra raidë B
+                }
+            }
             break;
         }
     }
     cout << "Uþðifruotas þodis: \n";
-    for(int al = 0; al < abc_letter_count; al++){
-        cout << Final_Array[al];
+    for(int al = 0; al < Array_Length; al++){
+        if(encoding == 1)
+            cout << Final_Array_LT[al];
+        else if(encoding == 2)
+            cout << static_cast<char>(Final_Array_ASCII[al]);
     }
+    cout << "\n";
 }
 
 int main(){
@@ -231,11 +237,14 @@ int main(){
             }
         }
 
-        char G[DEFAULT_ARRAY_SIZE]; // Galutinio ðifruoto arba deðifruoto þodþio masyvas.
+        const int FINAL_ARRAY_SIZE_P = strlen(P); // Galutinis masyvas negali bûti ilgesnis uþ pradinio masyvo þodþiø kieká.
+
+        char G[FINAL_ARRAY_SIZE_P] = {0}; // Galutinio ðifruoto arba deðifruoto þodþio masyvas LT encoding
+        int G_ASCII[FINAL_ARRAY_SIZE_P] = {0}; // Galutinio ðifruoto arba deðifruoto þodþio masyvas ASCII encoding
 
         switch(menu_choice){
             case 1: {
-                Encrypt(encoding, P, R, G, abc_letter_count);
+                Encrypt(encoding, P, R, G, G_ASCII, abc_letter_count);
                 break;
             }
             case 2: {
