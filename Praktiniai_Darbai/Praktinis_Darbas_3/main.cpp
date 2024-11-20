@@ -210,8 +210,8 @@ int main(){
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                        for(int x = 0; x < 30; x++)
-                            P[x] = 0; // Tuðtiname pradinio þodþio masyvà
+                        for(char & x : P) // Tuðtiname pradinio þodþio masyvà
+                            x = 0;
 
                         cout << "[KLAIDA]: Pradinis tekstas neatitinka vieno ið reikalavimø!\n";
                         continue;
@@ -224,8 +224,9 @@ int main(){
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                        for(int x = 0; x < 30; x++)
-                            P[x] = 0; // Tuðtiname pradinio þodþio masyvà
+
+                        for(char & x : P) // Tuðtiname pradiná tekstà.
+                            x = 0;
 
                         cout << "[KLAIDA]: Pradinis tekstas neatitinka vieno ið reikalavimø!\n";
                         continue;
