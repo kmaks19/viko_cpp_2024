@@ -3,6 +3,13 @@
 
 using namespace std;
 
+int RepeatTimes(const string str, const string targetWord, int & repeatTimes){
+    const int str_size = str.size();
+    const int targetWord_size = targetWord.size();
+
+
+}
+
 int main(){
 
     // 1 Užduotis
@@ -60,6 +67,14 @@ int main(){
     ofstream write_f3;
 
     read_f3.open("input2.txt");
+
+    string str;
+
+    getline(read_f3, str);
+
+    int repeatTimes = 0;
+
+
 
     read_f3.close();
 
