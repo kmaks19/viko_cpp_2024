@@ -16,7 +16,6 @@ struct menuItemType
 
 struct TotalOrderList
 {
-    string OrderItemName;
     unsigned int quantity{};
 };
 
@@ -45,14 +44,17 @@ void printCheck(const TotalOrderList totalOrderList[menuSize], const menuItemTyp
     const int name_setw = 50;
     const float price_setw = 16.5;
 
+
+    saskaita << "UAB „Mano kebabai“\n\n";
+
     for (int x = 0; x < menuSize; x++) {
         if (totalOrderList[x].quantity > 0) {
             const float totalPrice_temp = itemMenu[x].menuPrice * totalOrderList[x].quantity;
             totalPrice_perm += totalPrice_temp;
 
             saskaita << totalOrderList[x].quantity << " "
-                     << setw(name_setw-2) << left << totalOrderList[x].OrderItemName
-                     << setw(price_setw-2) << right << fixed << setprecision(2) << totalPrice_temp
+                     << setw(name_setw-2) << left << itemMenu[x].menuItem
+                     << setw(price_setw-4) << right << fixed << setprecision(2) << totalPrice_temp
                      << "€\n\n";
         }
     }
@@ -60,9 +62,9 @@ void printCheck(const TotalOrderList totalOrderList[menuSize], const menuItemTyp
     const float taxes = totalPrice_perm * 0.21;
     totalPrice_perm += taxes;
 
-    saskaita << setw(name_setw) << left << "Mokeðèiai:"
+    saskaita << setw(name_setw-1) << left << "Mokeðèiai:"
              << setw(price_setw-2) << right << fixed << setprecision(2) << taxes << "€" << "\n\n";
-    saskaita << setw(name_setw) << left << "Galutinë suma:"
+    saskaita << setw(name_setw-1) << left << "Galutinë suma:"
              << setw(price_setw-2) << right << fixed << setprecision(2) << totalPrice_perm << "€" << "\n\n";
 
     saskaita.close();
@@ -76,7 +78,7 @@ void Order(menuItemType itemMenu[menuSize], TotalOrderList totalOrder[menuSize],
             orders_count++;
         }
 
-    cout << "» Sëkmingai pridëjote " << totalOrder[order_choice].quantity << " vienetus patiekalo " << totalOrder[order_choice].OrderItemName << "\n";
+    cout << "» Sëkmingai pridëjote " << totalOrder[order_choice].quantity << " vienetus patiekalo " << itemMenu[order_choice].menuItem << "\n";
 
     while(true)
     {
@@ -146,11 +148,7 @@ int main(){
     TotalOrderList totalOrder[menuSize];
     getData(menuList);
 
-    for(int x = 0; x < menuSize; x++){
-        totalOrder[x].OrderItemName = menuList[x].menuItem;
-    }
-
-    cout << "Sveiki atvykæ á restoranà „Starkinë“\n";
+    cout << "Sveiki atvykæ á restoranà UAB „Mano kebabai“\n";
     while(true)
     {
         cout << "Pasirinkite:\n1 - Þiûrëti meniu\n2 - Uþsisakyti\n3 - Iðeiti\n";
