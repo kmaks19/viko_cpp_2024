@@ -41,11 +41,11 @@ void printCheck(const TotalOrderList totalOrderList[menuSize], const menuItemTyp
 
     float totalPrice_perm{};
 
-    const int name_setw = 50;
-    const float price_setw = 16.5;
+    constexpr int name_setw = 50;
+    constexpr float price_setw = 16.5;
 
 
-    saskaita << "UAB „Mano kebabai“\n\n";
+    saskaita << "UAB „Phoenix“\n\n";
 
     for (int x = 0; x < menuSize; x++) {
         if (totalOrderList[x].quantity > 0) {
@@ -78,7 +78,15 @@ void Order(menuItemType itemMenu[menuSize], TotalOrderList totalOrder[menuSize],
             orders_count++;
         }
 
-    cout << "» Sëkmingai pridëjote " << totalOrder[order_choice].quantity << " vienetus patiekalo " << itemMenu[order_choice].menuItem << "\n";
+    if(orders_count > maximumOrders)
+    {
+        cout << "» Daugiausiai galima atlikti 20 uþsakymø. Uþsisakyti daugiau negalite. Pateikiu jums sàskaità:\n";
+        printCheck(totalOrder, itemMenu);
+        system("pause");
+    }
+
+    cout << "Orders count: " << orders_count << endl;
+    cout << "» Sëkmingai pridëjote " << order_amount << " vienetus patiekalo " << itemMenu[order_choice].menuItem << "\n";
 
     while(true)
     {
@@ -114,14 +122,6 @@ void Order(menuItemType itemMenu[menuSize], TotalOrderList totalOrder[menuSize],
                     break;
                 }
 
-                if(orders_count > maximumOrders)
-                {
-                    cout << "» Daugiausiai galima atlikti 20 uþsakymø. Uþsisakyti daugiau negalite. Pateikiu jums sàskaità:\n";
-                    printCheck(totalOrder, itemMenu);
-                    system("pause");
-                    break;
-                }
-
                 cout << "» Áveskite kiek vienetø ðio patiekalo norësite uþsisakyti: \n";
                 int dish_amount{};
                 cin >> dish_amount;
@@ -148,7 +148,7 @@ int main(){
     TotalOrderList totalOrder[menuSize];
     getData(menuList);
 
-    cout << "Sveiki atvykæ á restoranà UAB „Mano kebabai“\n";
+    cout << "Sveiki atvykæ á restoranà UAB „Phoenix“\n";
     while(true)
     {
         cout << "Pasirinkite:\n1 - Þiûrëti meniu\n2 - Uþsisakyti\n3 - Iðeiti\n";
