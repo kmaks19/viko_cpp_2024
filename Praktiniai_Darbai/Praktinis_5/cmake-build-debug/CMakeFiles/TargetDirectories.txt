@@ -1,3 +1,0 @@
-C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Praktiniai_Darbai/Praktinis_5/cmake-build-debug/CMakeFiles/Praktinis_5.dir
-C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Praktiniai_Darbai/Praktinis_5/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/karol/OneDrive - Vilniaus kolegija/IT_Strukturinis_2024/Praktiniai_Darbai/Praktinis_5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
