@@ -12,12 +12,14 @@ struct Contacts
     string phoneNumber;
 };
 
+// Patikrinti ar Lietuviškas numeris +370 ir ar iš 8 skaitmenų - pagal REGEX.
 bool IsPhoneNumberValid(const string & phoneNumber)
 {
-    regex LithuanianNumber(R"(\+370\d{8})"); // Lietuviskas ir ar 8 skaiciai.
+    regex LithuanianNumber(R"(\+370\d{8})");
     return regex_match(phoneNumber, LithuanianNumber);
 }
 
+// Patikrinti ar įvestas tekstas yra raidės.
 bool IsStringEntered(const string & text)
 {
     for (char c : text)
@@ -28,6 +30,7 @@ bool IsStringEntered(const string & text)
     return true;
 }
 
+// Pridėti naują kontaktą.
 void AddContact(Contacts* & contact, unsigned int & Contacts_Limit, unsigned int & Contacts_Count)
 {
     if (Contacts_Limit == Contacts_Count) // Jei masyuvas pasiekia limitą
@@ -97,6 +100,7 @@ void AddContact(Contacts* & contact, unsigned int & Contacts_Limit, unsigned int
     }
 }
 
+// Išvesti kontaktus į ekraną.
 void PrintOutContacts(const Contacts* contacts, const unsigned int Contacts_Count)
 {
     if (Contacts_Count == 0)
@@ -115,12 +119,14 @@ void PrintOutContacts(const Contacts* contacts, const unsigned int Contacts_Coun
     }
 }
 
+// Išlyginti kontaktus tarkime yra [0][1][2][3] ištriname 2, tad turetu buti sulyginami tokia tvarka: [0][1][2]
 void SortOutContacts(Contacts*  contacts, const unsigned int Contacts_Count, const unsigned int Selected_Contact)
 {
     contacts[Selected_Contact - 1] = contacts[Contacts_Count - 1];
     contacts[Selected_Contact - 1].id = Selected_Contact - 1;
 }
 
+// Ištrinti kontaktą.
 void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
 {
     if (Contacts_Count == 0)
@@ -182,6 +188,12 @@ void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
         }
         break;
     }
+}
+
+// Kontakto redagavimas.
+void EditContact(Contacts* contacts)
+{
+
 }
 
 int main()
