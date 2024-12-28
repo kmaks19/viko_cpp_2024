@@ -94,7 +94,7 @@ void AddContact(Contacts* & contact, unsigned int & Contacts_Limit, unsigned int
         cout << "ID: " << contact[Contacts_Count].id+1 << " | " << "Vardas: " << contact[Contacts_Count].firstName
              << " | " << "Pavardė: " << contact[Contacts_Count].lastName << " | " << "Telefonas: "
              << contact[Contacts_Count].phoneNumber << endl;
-        Contacts_Count += 1;
+        Contacts_Count++;
 
         break;
     }
@@ -124,10 +124,11 @@ void SortOutContacts(Contacts*  contacts, const unsigned int Contacts_Count, con
 {
     contacts[Selected_Contact - 1] = contacts[Contacts_Count - 1];
     contacts[Selected_Contact - 1].id = Selected_Contact - 1;
+    contacts[Contacts_Count - 1] = Contacts{};
 }
 
 // Ištrinti kontaktą.
-void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
+void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count, unsigned int & Selected_Contact)
 {
     if (Contacts_Count == 0)
     {
@@ -136,7 +137,6 @@ void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
     }
     while (true)
     {
-        unsigned int Selected_Contact;
         cout << "• Pasirinkite kontaktą pagal ID: \n";
         cin >> Selected_Contact;
 
@@ -145,6 +145,7 @@ void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << "[❌]: Privalote įvesti skaičių (didesnį negu 0)\n";
+            Selected_Contact = 0;
             continue;
         }
         if (Selected_Contact > Contacts_Count)
@@ -152,6 +153,7 @@ void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << "[❌]: Tokio kontakto nėra\n";
+            Selected_Contact = 0;
             continue;
         }
         while (true)
@@ -173,10 +175,12 @@ void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
 
                 SortOutContacts(contacts, Contacts_Count, Selected_Contact);
                 Contacts_Count--;
+                Selected_Contact = 0;
             }
             else if (isUserSure == 2)
             {
                 cout << "[ⓘ] PASIRINKOTE NE\n";
+                Selected_Contact = 0;
                 break;
             }
             else
@@ -191,15 +195,163 @@ void RemoveContact(Contacts* contacts, unsigned int & Contacts_Count)
 }
 
 // Kontakto redagavimas.
-void EditContact(Contacts* contacts)
+void EditContact(Contacts* contacts, const unsigned int Contacts_Count, unsigned int & Selected_Contact)
 {
+    if (Contacts_Count == 0)
+    {
+        cout << "[❌]: Kontaktų pašalinimo veiksmas negalimas, kadangi neturite kontaktų!\n";
+        return;
+    }
+    while (true)
+    {
+        cout << "• Pasirinkite kontaktą pagal ID: \n";
+        cin >> Selected_Contact;
 
+        if (cin.fail() || Selected_Contact <= 0)
+        {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "[❌]: Privalote įvesti skaičių (didesnį negu 0)\n";
+            Selected_Contact = 0;
+            continue;
+        }
+        if (Selected_Contact > Contacts_Count)
+        {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "[❌]: Tokio kontakto nėra\n";
+            Selected_Contact = 0;
+            continue;
+        }
+        cout << "[✅] KONTAKTAS (ID: " << Selected_Contact << ") " << "SĖKMINGAI PASIRINKTAS" << "\n";
+        while (true)
+        {
+            unsigned int userSelection{};
+            cout << "• PASIRINKITE: \n"
+                    "1 - REDAGUOTI VARDĄ \n"
+                    "2 - REDAGUOTI PAVARDĘ \n"
+                    "3 - REDAGUOTI TELEFONO NUMERĮ \n"
+                    "4 - PASIRINKTI KONTAKTĄ IŠ NAUJO \n"
+                    "5 - GRĮŽTI Į MENU\n";
+
+            cin >> userSelection;
+
+            switch (userSelection)
+            {
+                case 1:
+                {
+                    while (true)
+                    {
+                        cout << "ⓘ Dabartinis kontakto (ID: " << Selected_Contact << ") vardas yra: " << contacts[Selected_Contact-1].firstName << "\n";
+                        cout << "• ĮVESKITE NAUJĄ VARDĄ: \n";
+
+                        cin >> contacts[Selected_Contact-1].firstName;
+                        if (contacts[Selected_Contact-1].firstName.empty() || !IsStringEntered(contacts[Selected_Contact-1].firstName))
+                        {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            cout << "[❌]: Vardas negali būti tuščias! Ir jį turi sudaryti raidės\n";
+                            continue;
+                        }
+                        cout << "[✅] KONTAKTO (ID: " << Selected_Contact << ") " << "NAUJAS VARDAS: " << contacts[Selected_Contact-1].firstName << "\n";
+                        Selected_Contact = 0;
+                        break;
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    while (true)
+                    {
+                        cout << "ⓘ Dabartinė kontakto (ID: " << Selected_Contact << ") pavardė yra: " << contacts[Selected_Contact-1].lastName << "\n";
+                        cout << "• ĮVESKITE NAUJĄ PAVARDĘ: \n";
+                        cin >> contacts[Selected_Contact-1].lastName;
+                        if (contacts[Selected_Contact-1].lastName.empty() || !IsStringEntered(contacts[Selected_Contact-1].lastName))
+                        {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            cout << "[❌]: Pavardė negali būti tuščia! Ir ją turi sudaryti raidės\n";
+                            continue;
+                        }
+                        cout << "[✅] KONTAKTO (ID: " << Selected_Contact << ") " << "NAUJA PAVARDĖ: " << contacts[Selected_Contact-1].lastName << "\n";
+                        Selected_Contact = 0;
+                        break;
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    while (true)
+                    {
+                        cout << "ⓘ Dabartinis kontakto (ID: " << Selected_Contact << ") telefono numeris yra: " << contacts[Selected_Contact-1].phoneNumber << "\n";
+                        cout << "• ĮVESKITE NAUJĄ KONTAKTO TELEFONO NUMERĮ: ";
+                        cin >> contacts[Selected_Contact-1].phoneNumber;
+
+                        if (!IsPhoneNumberValid(contacts[Selected_Contact-1].phoneNumber))
+                        {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            cout << "[❌]: Telefono numeris negali būti tuščias! Taip pat jis turi būti 8 skaitmenų ir lietuviško formato +370\n";
+                            continue;
+                        }
+                        cout << "[✅] KONTAKTO (ID: " << Selected_Contact << ") " << "NAUJAS TELEFONO NUMERIS YRA: " << contacts[Selected_Contact-1].phoneNumber << "\n";
+                        Selected_Contact = 0;
+                        break;
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    while (true)
+                    {
+                        cout << "• Pasirinkite kontaktą pagal ID: \n";
+                        cin >> Selected_Contact;
+
+                        if (cin.fail() || Selected_Contact <= 0)
+                        {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            cout << "[❌]: Privalote įvesti skaičių (didesnį negu 0)\n";
+                            Selected_Contact = 0;
+                            continue;
+                        }
+                        if (Selected_Contact > Contacts_Count)
+                        {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            cout << "[❌]: Tokio kontakto nėra\n";
+                            Selected_Contact = 0;
+                            continue;
+                        }
+                        cout << "[✅] KONTAKTAS (ID: " << Selected_Contact << ") " << "SĖKMINGAI PASIRINKTAS" << "\n";
+                        break;
+                    }
+                    continue;
+                }
+                case 5:
+                {
+                    cout << "ⓘ PASIRINKOTE GRĮŽTI Į MENU\n";
+                    Selected_Contact = 0;
+                    break;
+                }
+                default:
+                {
+                    cout << "[❌]: Tokio pasirinkimo nėra\n";
+                    Selected_Contact = 0;
+                    continue;
+                }
+            }
+            break;
+        }
+        break;
+    }
 }
 
 int main()
 {
     unsigned int Contacts_Limit = 10;
     unsigned int Contacts_Count = 0;
+    unsigned int Selected_Contact = 0;
     system("chcp 65001 > nul");
 
     cout << "Praktinis darbas 5. Užduotis 2. Programa tęsis kol pasirinksite išeiti iš programos\n";
@@ -243,11 +395,12 @@ int main()
             }
             case 2:
             {
+                EditContact(contact, Contacts_Count, Selected_Contact);
                 break;
             }
             case 3:
             {
-                RemoveContact(contact, Contacts_Count);
+                RemoveContact(contact, Contacts_Count, Selected_Contact);
                 break;
             }
             case 4:
